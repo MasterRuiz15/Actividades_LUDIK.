@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividades Discalculia</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+  <header>
+    <h1>Actividades para Discalculia</h1>
+    <p>Aprende con juegos sencillos de números y cantidades</p>
+  </header>
+
+  <!-- Eliminamos el botón de inicio -->
+  <div id="pantalla-inicial" class="contenedor" hidden></div>
+
+  <!-- Mostramos directamente el área de la actividad -->
+  <div id="vista-actividad" class="contenedor"></div>
+
+  <footer>
+    <p>© 2025 Actividades Inclusivas</p>
+  </footer>
+
+  <script src="App.js"></script>
+  <script>
+    // Llamamos de inmediato a la actividad al cargar la página
+    window.addEventListener("DOMContentLoaded", function() {
+      mostrarModo("discalculia"); 
+    });
+  </script>
+</body>
+</html>
