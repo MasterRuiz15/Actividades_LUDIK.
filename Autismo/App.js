@@ -326,6 +326,24 @@ function mostrarFeedback(mensaje, tipo) {
 }
 
 /********************
+ * Funciones progreso
+ ********************/
+function actualizarBarraAutismo() {
+  const progreso = Math.round((apartadosCompletadosAutismo / TOTAL_APARTADOS_AUTISMO) * 100);
+  document.getElementById("progress-bar-autismo").style.width = progreso + "%";
+  document.getElementById("progress-text-autismo").textContent =
+    `Progreso: ${apartadosCompletadosAutismo}/${TOTAL_APARTADOS_AUTISMO} apartados completados`;
+}
+
+/********************
+ * Ejemplo al terminar apartado
+ ********************/
+function terminarApartadoAutismo() {
+  apartadosCompletadosAutismo++;
+  actualizarBarraAutismo();
+  volverAlMenu();
+}
+/********************
  * Sonidos *
  ********************/
 const sonidos = {

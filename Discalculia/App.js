@@ -2,6 +2,8 @@ let actividadIndex = 0;
 let apartadoActual = null;
 let correctos = 0;
 const LIMITE = 3; // límite global de correctos por apartado
+let apartadosCompletados = 0;
+const TOTAL_APARTADOS = 6;
 
 /********************
  * Sonidos
@@ -105,7 +107,6 @@ function cargarActividades(indice, titulo) {
     ]
   ];
 
-  // 👉 Si alcanzó el límite → regresar al menú de apartados
   if (correctos >= LIMITE) {
     reproducirSonido("fin");
     mostrarFeedback(`¡Completaste ${LIMITE} actividades! 🎉`, "correcto");
@@ -113,7 +114,6 @@ function cargarActividades(indice, titulo) {
     return;
   }
 
-  // 👉 Si no hay más actividades → también regresar
   if (actividadIndex >= actividades[indice].length) {
     reproducirSonido("fin");
     mostrarFeedback("¡Has terminado este apartado! 🎉", "correcto");
@@ -148,11 +148,14 @@ function mostrarActividad(actividad, indice, titulo) {
 
   vista.innerHTML = `
     <button class="btn-regresar" onclick="mostrarModo()">⬅ Regresar</button>
-    <h2 id="instruccion">${titulo} - Actividad ${actividadIndex + 1}</h2>
     <p id="marcador">Correctos: ${correctos}/${LIMITE}</p>
-    <div class="tarjeta-bonita">
+
+    <div class="tarjeta-instruccion">
       <p>${actividad.texto}</p>
-      <div class="opciones">${opciones}</div>
+    </div>
+
+    <div class="opciones">
+      ${opciones}
     </div>
   `;
 }

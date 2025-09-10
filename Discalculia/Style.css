@@ -361,3 +361,260 @@ footer {
   align-items: center;
   justify-content: center;
 }
+/* Tarjeta para la instrucción */
+.tarjeta-instruccion {
+  background: #ede9fe;
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin: 16px auto;
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: bold;
+  color: #4f46e5;
+  max-width: 600px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Opciones en cuadrícula bonitas */
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.opciones .tarjeta-bonita {
+  font-size: 1.4em;
+  padding: 12px 20px;
+  min-width: 60px;
+  text-align: center;
+  border-radius: 10px;
+  background: white;
+  border: 2px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.opciones .tarjeta-bonita:hover {
+  background: #f3f4f6;
+  transform: scale(1.05);
+}
+/* ===========================
+   General
+=========================== */
+body {
+  font-family: 'Arial', sans-serif;
+  background: #f9fafb;
+  margin: 0;
+  padding: 0;
+  color: #111827;
+}
+
+h2, h3 {
+  margin: 0.5em 0;
+  text-align: center;
+  color: #1f2937;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+/* ===========================
+   Botón regresar
+=========================== */
+.btn-regresar {
+  background: #6366f1;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 1em;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  transition: background 0.2s ease;
+}
+
+.btn-regresar:hover {
+  background: #4f46e5;
+}
+
+/* ===========================
+   Marcador de progreso
+=========================== */
+#marcador {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #0ea5e9;
+}
+
+/* ===========================
+   Tarjeta de instrucción
+=========================== */
+.tarjeta-instruccion {
+  background: #ede9fe;               /* morado suave */
+  border-radius: 16px;
+  padding: 20px;
+  margin: 20px auto;
+  text-align: center;
+  font-size: 1.6em;                  /* letra grande */
+  font-weight: bold;
+  color: #4f46e5;                    /* tono violeta */
+  max-width: 650px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* ===========================
+   Opciones en cuadrícula
+=========================== */
+.opciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Tarjetas de opción */
+.opciones .tarjeta-bonita {
+  font-size: 1.4em;
+  padding: 14px 22px;
+  min-width: 70px;
+  text-align: center;
+  border-radius: 12px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.opciones .tarjeta-bonita:hover {
+  background: #f3f4f6;
+  transform: scale(1.05);
+}
+
+/* Respuestas correctas / incorrectas */
+.correct {
+  background: #bbf7d0 !important; /* verde suave */
+  border-color: #22c55e !important;
+}
+
+.incorrecta {
+  background: #fecaca !important; /* rojo suave */
+  border-color: #ef4444 !important;
+}
+
+/* ===========================
+   Feedback
+=========================== */
+.feedback {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  z-index: 1000;
+  animation: aparecer 0.3s ease;
+}
+
+.feedback.correcto {
+  background: #22c55e;
+}
+
+.feedback.incorrecto {
+  background: #ef4444;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ===========================
+   Elementos de Dispraxia
+=========================== */
+.zona-destino {
+  width: 80%;
+  height: 150px;
+  margin: 20px auto;
+  border: 3px dashed #6366f1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+}
+
+.objeto-arrastrable {
+  font-size: 2em;
+  margin: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  cursor: grab;
+}
+
+.objeto-arrastrable:active {
+  cursor: grabbing;
+}
+
+#p5-container {
+  margin: 20px auto;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  max-width: 420px;
+  background: white;
+}
+
+.btn-completar {
+  display: block;
+  margin: 20px auto;
+  background: #22c55e;
+  color: white;
+  font-size: 1.2em;
+  padding: 12px 20px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.btn-completar:hover {
+  background: #16a34a;
+}
+/* Barra de progreso en menú principal */
+.progress-container {
+  width: 80%;
+  max-width: 700px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  margin: 20px auto;
+  height: 28px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-principal), var(--color-secundario));
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 8px;
+  color: var(--color-principal);
+}

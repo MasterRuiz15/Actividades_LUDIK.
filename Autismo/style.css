@@ -362,3 +362,31 @@ footer {
 #vista-actividad.activa {
   display: block;
 }
+/* Barra de progreso en menú principal */
+.progress-container {
+  width: 80%;
+  max-width: 700px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  margin: 20px auto;
+  height: 28px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-principal), var(--color-secundario));
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-top: 8px;
+  color: var(--color-principal);
+}
