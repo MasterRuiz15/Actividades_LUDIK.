@@ -10,24 +10,19 @@
     <h1>Actividades para Discalculia</h1>
     <p>Aprende con juegos sencillos de números y cantidades</p>
   </header>
-  <a href="../Pagina_Principal.html" class="btn-regresar">
+  <a id="btnRegresarPrincipal" href="../Pagina_Principal.html" class="btn--regresar">
     ⬅ Regresar
   </a>
-  <!-- Eliminamos el botón de inicio -->
-  <div id="pantalla-inicial" class="contenedor" hidden></div>
+  <!-- Menú de apartados -->
+  <main id="menu-apartados" class="contenedor"></main>
 
-  <!-- Mostramos directamente el área de la actividad -->
-  <div id="vista-actividad" class="contenedor"></div>
+  <!-- Pantalla de actividad -->
+  <section id="pantalla-actividad" class="contenedor" hidden></section>
+
+  <footer>
     <p>© 2025 Actividades Inclusivas</p>
   </footer>
 
   <script src="App.js"></script>
-  <script>
-    // Llamamos de inmediato a la actividad al cargar la página
-    window.addEventListener("DOMContentLoaded", function() {
-      mostrarModo("discalculia"); 
-    });
-  
-  </script>
 </body>
 </html>
