@@ -76,4 +76,26 @@
     color: var(--color-texto);
     opacity: 0.7;
   }
+  .menu-principal-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .seccion-titulo {
+    font-size: 1.8rem;
+    color: var(--color-principal);
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 5px;
+  }
+  
+  .grid-categorias {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+  }
   

@@ -1,19 +1,17 @@
 let correctos = 0;
 const maxCorrectos = 10;
 
-// 🔊 Sonidos (asegúrate de tenerlos en /sonidos/)
+// 🔊 Sonidos
 const sonidoCorrecto = new Audio("Sounds/correcto.mp3");
 const sonidoIncorrecto = new Audio("Sounds/incorrecto.mp3");
 const sonidoFin = new Audio("Sounds/fin.mp3");
 
-// Feedback
 function mostrarFeedback(texto, correcto = true) {
   const div = document.createElement("div");
   div.className = `feedback ${correcto ? 'correcto' : 'incorrecto'}`;
   div.textContent = texto;
   document.body.appendChild(div);
 
-  // 🔊 Reproducir sonido según el caso
   if (texto.includes("¡Actividad terminada!")) {
     sonidoFin.play();
   } else {
@@ -36,41 +34,46 @@ function actualizarMarcador() {
 function finalizarActividad() {
   mostrarFeedback("¡Actividad terminada!", true);
   correctos = 0;
-  setTimeout(mostrarMenu, 2000); // 🔹 volver al menú después de 2 seg
+  setTimeout(mostrarMenu, 2000);
 }
 
-// TTS
 function leerTexto(texto) {
   const msg = new SpeechSynthesisUtterance(texto);
   window.speechSynthesis.speak(msg);
 }
 
-// Mostrar menú
+/* --- Mostrar menú y ocultar botón principal cuando entramos a actividad --- */
 function mostrarMenu() {
   document.getElementById("menu-principal").style.display = "block";
   document.getElementById("vista-actividad").hidden = true;
+  document.getElementById("btnRegresarPrincipal").style.display = "inline-block";
   correctos = 0;
+}
+
+function ocultarMenuPrincipal() {
+  document.getElementById("menu-principal").style.display = "none";
+  document.getElementById("btnRegresarPrincipal").style.display = "none";
 }
 
 /********************
  * Actividad Sílabas
  ********************/
 const silabas = [
-  { id: 'ma', texto: 'ma' },{ id: 'me', texto: 'me' },{ id: 'mi', texto: 'mi' },
-  { id: 'mo', texto: 'mo' },{ id: 'mu', texto: 'mu' },
-  { id: 'pa', texto: 'pa' },{ id: 'pe', texto: 'pe' },{ id: 'pi', texto: 'pi' },
-  { id: 'po', texto: 'po' },{ id: 'pu', texto: 'pu' }
+  { id: 'ma', texto: 'ma' }, { id: 'me', texto: 'me' }, { id: 'mi', texto: 'mi' },
+  { id: 'mo', texto: 'mo' }, { id: 'mu', texto: 'mu' },
+  { id: 'pa', texto: 'pa' }, { id: 'pe', texto: 'pe' }, { id: 'pi', texto: 'pi' },
+  { id: 'po', texto: 'po' }, { id: 'pu', texto: 'pu' }
 ];
 
 function iniciarSilabas() {
   const contenedor = document.getElementById("vista-actividad");
   contenedor.hidden = false;
-  document.getElementById("menu-principal").style.display = "none";
+  ocultarMenuPrincipal();
   contenedor.innerHTML = "";
 
   const btnBack = document.createElement("button");
   btnBack.className = "btn-regresar";
-  btnBack.textContent = "⬅ Regresar";
+  btnBack.textContent = "⬅ Volver a apartados";
   btnBack.addEventListener("click", mostrarMenu);
   contenedor.appendChild(btnBack);
 
@@ -98,7 +101,7 @@ function iniciarSilabas() {
           correctos++;
           actualizarMarcador();
           if (correctos >= maxCorrectos) {
-            finalizarActividad(); // 🔹 vuelve al menú al terminar
+            finalizarActividad();
           } else {
             setTimeout(mostrarSiguiente, 600);
           }
@@ -121,12 +124,12 @@ function iniciarSilabas() {
 function iniciarVocabulario() {
   const contenedor = document.getElementById("vista-actividad");
   contenedor.hidden = false;
-  document.getElementById("menu-principal").style.display = "none";
+  ocultarMenuPrincipal();
   contenedor.innerHTML = "";
 
   const btnBack = document.createElement("button");
   btnBack.className = "btn-regresar";
-  btnBack.textContent = "⬅ Regresar";
+  btnBack.textContent = "⬅ Volver a apartados";
   btnBack.addEventListener("click", mostrarMenu);
   contenedor.appendChild(btnBack);
 
@@ -151,164 +154,32 @@ function iniciarVocabulario() {
   contenedor.appendChild(apartados);
 }
 
-function mostrarCategoriaVocabulario(categoria, contenedor) {
-  contenedor.innerHTML = "";
-
-  const btnBack = document.createElement("button");
-  btnBack.className = "btn-regresar";
-  btnBack.textContent = "⬅ Regresar";
-  btnBack.addEventListener("click", iniciarVocabulario);
-  contenedor.appendChild(btnBack);
-
-  const datos = {
-    animales: ["🐶","🐱","🦁","🐘","🐒","🐻","🐰","🐯","🐟","🐴","🐷","🐮","🐔","🦊","🐺"],
-    objetos: ["📖","⚽","🏠","📱","🚗","⌚","🪑","🖥️","💻","🖊️","🎒","📷","📺","🎸","🎤"]
-  };
-
-  const nombres = {
-    animales: ["Perro","Gato","León","Elefante","Mono","Oso","Conejo","Tigre","Pez","Caballo","Cerdo","Vaca","Gallina","Zorro","Lobo"],
-    objetos: ["Libro","Pelota","Casa","Teléfono","Coche","Reloj","Mesa","Silla","Computador","Lapicero","Mochila","Cámara","Televisor","Guitarra","Micrófono"]
-  };
-
-  const grupoSize = 5;
-  for (let i = 0; i < datos[categoria].length; i += grupoSize) {
-    const grid = document.createElement("div");
-    grid.className = "opciones";
-    for (let j = i; j < i + grupoSize && j < datos[categoria].length; j++) {
-      const item = document.createElement("div");
-      item.className = "tarjeta-bonita";
-      item.innerHTML = `
-        <div style="font-size:3rem">${datos[categoria][j]}</div>
-        <button class="btn-escuchar" style="margin-top:10px">🔊 Escuchar</button>
-        <p>${nombres[categoria][j]}</p>
-      `;
-      item.querySelector(".btn-escuchar").addEventListener("click", () => leerTexto(nombres[categoria][j]));
-      grid.appendChild(item);
-    }
-    contenedor.appendChild(grid);
-  }
-}
-
 /********************
  * Historias
  ********************/
 function iniciarHistorias() {
   const contenedor = document.getElementById("vista-actividad");
   contenedor.hidden = false;
-  document.getElementById("menu-principal").style.display = "none";
+  ocultarMenuPrincipal();
   contenedor.innerHTML = "";
 
   let indice = 0;
-  const historias = [
-    { 
-      texto: "El perro ____ la pelota", 
-      respuesta: "muerde", 
-      opciones: [
-        { palabra: "muerde", imagen: "🦴" }, 
-        { palabra: "duerme", imagen: "😴" }, 
-        { palabra: "salta", imagen: "🤸‍♂️" }
-      ] 
-    },
-    { 
-      texto: "La niña ____ agua", 
-      respuesta: "bebe", 
-      opciones: [
-        { palabra: "bebe", imagen: "🥤" }, 
-        { palabra: "lee", imagen: "📖" }, 
-        { palabra: "corre", imagen: "🏃‍♀️" }
-      ] 
-    },
-    { 
-      texto: "El gato ____ en la cama", 
-      respuesta: "duerme", 
-      opciones: [
-        { palabra: "duerme", imagen: "😴" }, 
-        { palabra: "salta", imagen: "🤸‍♂️" }, 
-        { palabra: "bebe", imagen: "🥛" }
-      ] 
-    },
-    { 
-      texto: "El niño ____ un libro", 
-      respuesta: "lee", 
-      opciones: [
-        { palabra: "lee", imagen: "📖" }, 
-        { palabra: "come", imagen: "🍎" }, 
-        { palabra: "corre", imagen: "🏃‍♂️" }
-      ] 
-    },
-    { 
-      texto: "La vaca ____ leche", 
-      respuesta: "da", 
-      opciones: [
-        { palabra: "da", imagen: "🥛" }, 
-        { palabra: "salta", imagen: "🤸‍♀️" }, 
-        { palabra: "bebe", imagen: "🥤" }
-      ] 
-    },
-    { 
-      texto: "El pez ____ en el agua", 
-      respuesta: "nada", 
-      opciones: [
-        { palabra: "nada", imagen: "🐟" }, 
-        { palabra: "camina", imagen: "🚶‍♂️" }, 
-        { palabra: "corre", imagen: "🏃‍♂️" }
-      ] 
-    },
-    { 
-      texto: "El pájaro ____ en el cielo", 
-      respuesta: "vuela", 
-      opciones: [
-        { palabra: "vuela", imagen: "🕊️" }, 
-        { palabra: "camina", imagen: "🚶" }, 
-        { palabra: "duerme", imagen: "😴" }
-      ] 
-    },
-    { 
-      texto: "El niño ____ una pelota", 
-      respuesta: "lanza", 
-      opciones: [
-        { palabra: "lanza", imagen: "⚽" }, 
-        { palabra: "come", imagen: "🍎" }, 
-        { palabra: "lee", imagen: "📖" }
-      ] 
-    },
-    { 
-      texto: "La mamá ____ comida", 
-      respuesta: "cocina", 
-      opciones: [
-        { palabra: "cocina", imagen: "🍲" }, 
-        { palabra: "bebe", imagen: "🥤" }, 
-        { palabra: "lee", imagen: "📖" }
-      ] 
-    },
-    { 
-      texto: "El sol ____ de día", 
-      respuesta: "brilla", 
-      opciones: [
-        { palabra: "brilla", imagen: "☀️" }, 
-        { palabra: "duerme", imagen: "😴" }, 
-        { palabra: "corre", imagen: "🏃‍♀️" }
-      ] 
-    }
-  ];
-  
+  const historias = [ /* tus historias */ ];
 
   function mostrarHistoria() {
     contenedor.innerHTML = "";
-
     if (indice >= historias.length) {
-      finalizarActividad(); // 🔹 vuelve al menú al terminar
+      finalizarActividad();
       return;
     }
 
     const h = historias[indice];
     const btnBack = document.createElement("button");
     btnBack.className = "btn-regresar";
-    btnBack.textContent = "⬅ Regresar";
+    btnBack.textContent = "⬅ Volver a apartados";
     btnBack.addEventListener("click", mostrarMenu);
     contenedor.appendChild(btnBack);
 
-    // 🔹 contador arriba
     actualizarMarcador();
 
     const texto = document.createElement("p");
@@ -342,7 +213,7 @@ function iniciarHistorias() {
   mostrarHistoria();
 }
 
-// --- Botones menú principal ---
+/* --- Botones menú principal --- */
 document.querySelectorAll(".menu-actividades button").forEach(btn => {
   btn.addEventListener("click", () => {
     const act = btn.dataset.actividad;

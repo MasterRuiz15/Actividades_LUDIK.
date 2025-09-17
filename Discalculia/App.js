@@ -3,27 +3,37 @@ let apartadoActual = null;
 let correctos = 0;
 const LIMITE = 3;
 
-/* --- Sonidos --- */
 const sonidos = {
   correcto: new Audio("Sounds/correcto.mp3"),
   incorrecto: new Audio("Sounds/incorrecto.mp3"),
   fin: new Audio("Sounds/fin.mp3")
 };
+
 function reproducirSonido(tipo) {
-  const audio = sonidos[tipo];
-  if (!audio) return;
-  audio.currentTime = 0;
-  audio.play().catch(() => {});
+  const a = sonidos[tipo];
+  if (!a) return;
+  a.currentTime = 0;
+  a.play().catch(()=>{});
 }
 
-/* --- Menú principal --- */
-function mostrarMenu() {
-  const menu = document.getElementById("menu-apartados");
-  const actividad = document.getElementById("pantalla-actividad");
-  menu.hidden = false;
-  actividad.hidden = true;
+/* ----- Abrir / Cerrar vistas ----- */
+function abrirActividad() {
+  // Oculta menú y el botón principal de regreso
+  document.getElementById("menu-apartados").style.display = "none";
+  document.getElementById("btnRegresarPrincipal").style.display = "none";
+
+  const vista = document.getElementById("vista-actividad");
+  vista.hidden = false;
 }
 
+function volverAlMenu() {
+  // Muestra de nuevo el menú y el botón principal
+  document.getElementById("vista-actividad").hidden = true;
+  document.getElementById("menu-apartados").style.display = "block";
+  document.getElementById("btnRegresarPrincipal").style.display = "inline-block";
+}
+
+/* ----- Menú principal ----- */
 function cargarApartados() {
   const apartados = [
     "Contar objetos",
@@ -40,21 +50,24 @@ function cargarApartados() {
       ${apartados.map((a,i)=>`
         <div class="categoria">
           <h3>${a}</h3>
-          <button onclick="iniciarApartado(${i})">Iniciar</button>
+          <button data-indice="${i}">Iniciar</button>
         </div>`).join("")}
     </div>
   `;
+  cont.querySelectorAll("button[data-indice]").forEach(btn=>{
+    btn.addEventListener("click", e=>{
+      iniciarApartado(parseInt(e.target.dataset.indice));
+    });
+  });
 }
 
-
-/* --- Actividades --- */
+/* ----- Actividades ----- */
 function iniciarApartado(indice){
   actividadIndex = 0;
   correctos = 0;
   apartadoActual = indice;
 
-  document.getElementById("menu-apartados").hidden = true;
-  document.getElementById("pantalla-actividad").hidden = false;
+  abrirActividad();
   cargarActividad();
 }
 
@@ -95,15 +108,14 @@ function cargarActividad(){
   if (correctos >= LIMITE || actividadIndex >= lista[apartadoActual].length) {
     reproducirSonido("fin");
     mostrarFeedback("¡Apartado completado! 🎉","correcto");
-    setTimeout(mostrarMenu,1500);
+    setTimeout(volverAlMenu,1500);
     return;
   }
 
   const act = lista[apartadoActual][actividadIndex];
   let opciones="";
   if(typeof act.correcta === "number"){
-    let nums=[act.correcta-1,act.correcta,act.correcta+1]
-      .filter(n=>n>0);
+    let nums=[act.correcta-1,act.correcta,act.correcta+1].filter(n=>n>0);
     opciones = nums.map(n=>`
       <button class="tarjeta-bonita"
        onclick="validar(${n},${act.correcta})">${n}</button>`
@@ -115,7 +127,6 @@ function cargarActividad(){
   }
 
   document.getElementById("pantalla-actividad").innerHTML = `
-    <button class="btn-regresar" onclick="mostrarMenu()">⬅ Regresar</button>
     <p id="marcador">Correctos: ${correctos}/${LIMITE}</p>
     <div class="tarjeta-instruccion">${act.texto}</div>
     <div class="opciones">${opciones}</div>
@@ -147,4 +158,6 @@ function mostrarFeedback(msg,tipo){
 /* Inicio */
 window.addEventListener("DOMContentLoaded",()=>{
   cargarApartados();
+  document.getElementById('btnRegresarMenu')
+    .addEventListener('click', volverAlMenu);
 });
